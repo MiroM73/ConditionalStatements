@@ -214,7 +214,7 @@ namespace ConditionalStatements
                     break;
             }
             KoniecSkriptu();
-            */
+            
             //9.We are given 5 integer numbers. Write a program that finds those
             //subsets whose sum is 0.Examples: 
             //-If we are given the numbers { 3, -2, 1, 1, 8}, the sum of - 2, 1 and 1
@@ -228,7 +228,7 @@ namespace ConditionalStatements
             {
                 zadaneCisla.Add(int.Parse(item));
             }
-            Array zadaneCislaPole = zadaneCisla.ToArray();
+            int[] zadaneCislaPole = zadaneCisla.ToArray();
             int sumaCisel = 0;            
             foreach (int item in zadaneCislaPole)
             {
@@ -236,7 +236,7 @@ namespace ConditionalStatements
             }
             if (sumaCisel == 0)
             {
-                foreach (var item in zadaneCislaPole)
+                foreach (int item in zadaneCislaPole)
                 {
                     Console.Write("{0} ", item.ToString());
                 }
@@ -254,9 +254,8 @@ namespace ConditionalStatements
             for (int i = 2; i < zadaneCislaPole.Length; i++)
             {
                 pocetSkupin = Factorial(dlzkaPola) / (Factorial(i) * Factorial(dlzkaPola - i));
-                Console.WriteLine($"Pocet moznych kombinacii pre k = {i} je {pocetSkupin}");                
-
-
+                Console.WriteLine($"Pocet moznych kombinacii pre k = {i} je {pocetSkupin}");
+                PrintCombination(zadaneCislaPole, zadaneCislaPole.Length, i);
             }
 
             KoniecSkriptu();
@@ -268,6 +267,31 @@ namespace ConditionalStatements
             //- If the score is between 7 and 9, the program multiplies it by 1000.
             //- If the score is 0 or more than 9, the program prints an error
             //message.
+            Console.Write("Enter score in the range 1..9: ");
+            int score = int.Parse(Console.ReadLine());
+            if (1 <= score && score <= 3)
+            {
+                Console.WriteLine($"Score {score} is between 1 and 3. {score} * 10 = " + (score * 10));
+            }
+            else if (4 <= score && score <= 6)
+            {
+                Console.WriteLine($"Score {score} is between 4 and 6. {score} * 100 = " + (score * 100));
+            }
+            else if (7 <= score && score <= 9)
+            {
+                Console.WriteLine($"Score {score} is between 7 and 9. {score} * 1000 = " + (score * 1000));
+            }
+            else if (0 == score || score == 9)
+            {
+                Console.WriteLine($"Score {score} is ZERO or NINE: ERROR");
+            }
+            else
+            {
+                Console.WriteLine($"Entered value: {score}, is out of range.");
+            }
+            
+            KoniecSkriptu();
+            */
 
             //11. * Write a program that converts a number in the range[0…999] to
             //words, corresponding to the English pronunciation. Examples:
@@ -278,6 +302,55 @@ namespace ConditionalStatements
             //            - 400-- > "Four hundred"
             //            - 501-- > "Five hundred and one"
             //            - 711-- > "Seven hundred and eleven"
+            Console.WriteLine("Enter the integer in the range 1 .. 999. I will convert it into the English word.");
+            Console.Write("Enter the integer: ");
+            string inputFromConsole = Console.ReadLine();
+            bool isNumber = int.TryParse(inputFromConsole,out int number);
+            if (! isNumber)
+            {
+                Console.WriteLine($"The entered number \"{inputFromConsole}\" is not integer!!!");
+                Environment.Exit(2);
+            }
+            int decNumber = 1;
+            int unitNumber = 1;
+            string hundredPrefix = "";
+
+            string[] basicNumbers = { "", "One", "Two" , "Three" , "Four" , "Five" , "Six" , "Seven" , "Eight" , "Nine" , "" ,
+                "Eleven" , "Twelve" , "Thirteen" , "Fourteen" , "Fifteen" , "Sixteen" , "Seventeen" , "Eighteen" , "Nineteen"};
+            string[] multipliesOfTen = { "" , "Ten", "Twenty", "Thirty", "Fourty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
+
+            if (number <= 1 || number > 999)
+            {
+                Console.WriteLine($"The entered number {number} is out of the scope (1..999).");                
+                Environment.Exit(2);
+            }
+
+            if (number >= 100)
+            {
+                hundredPrefix = basicNumbers[number / 100] + " hundred and ";
+            }
+            
+            if (number <= 19 && number != 10)
+            {
+                Console.WriteLine($"The entered number {number} is in English: {basicNumbers[number]}");
+            }
+            else if (number > 19 && (number % 10) != 0 && number < 999)
+            {
+                decNumber = number / 10;  
+                if (decNumber > 10)
+                {
+                    decNumber = decNumber % 10;
+                }
+                unitNumber = number % 10;
+                Console.WriteLine($"The entered number {number} is in English: " +
+                    $"{hundredPrefix}" + 
+                    (hundredPrefix.Length > 2 ? (multipliesOfTen[decNumber]).ToLower() : multipliesOfTen[decNumber]) + 
+                    " " + (basicNumbers[unitNumber]).ToLower());
+            }
+            else if (number >= 10 && (number % 10) == 0 && number < 100)
+            {
+                Console.WriteLine($"Entered number {number} in english is: " + multipliesOfTen[number / 10]);
+            }
         }
 
         private static double Factorial(int cislo)
