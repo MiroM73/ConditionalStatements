@@ -7,7 +7,7 @@ namespace ConditionalStatements
     {
         static void Main(string[] args)
         {
-            /*
+            
             //1.Write an if-statement that takes two integer variables and exchanges
             //their values if the first one is greater than the second one.
             Console.WriteLine("Zadaj dve cisla a ja ich vypisem v zoradenom poradi.");
@@ -291,7 +291,7 @@ namespace ConditionalStatements
             }
             
             KoniecSkriptu();
-            */
+            
 
             //11. * Write a program that converts a number in the range[0…999] to
             //words, corresponding to the English pronunciation. Examples:
